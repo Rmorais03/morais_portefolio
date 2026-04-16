@@ -1,16 +1,29 @@
-# React + Vite
+# Creative Developer Portfolio | Rodrigo Morais
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my personal portfolio developed to showcase the convergence between UI/UX design and Full Stack development. The project was built with a focus on high performance, fluid animations, and an immersive user experience (Dark Mode).
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project utilizes modern tools from the web development ecosystem:
 
-## React Compiler
+- **React** (Vite as the build tool)
+- **Framer Motion** (Entrance animations and dynamic interactions)
+- **Bootstrap** (Grid system and base components)
+- **Custom CSS** (Glassmorphism, Neon Lasers, and Ambient Glow effects)
+- **Google Fonts** (Plus Jakarta Sans)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Design & Functionality Highlights
 
-## Expanding the ESLint configuration
+- **Smart Navigation:** A Navbar featuring a "Glassmorphism" effect that automatically hides on scroll (Smart Hide).
+- **Scroll Performance:** Sections divided by "Neon Dividers" and depth effects to prevent visual fatigue.
+- **Micro-interactions:** Buttons with scale effects and dynamic shadows (glow), optimized to prevent *hover flicker*.
+- **Fully Responsive:** Seamlessly adapted for mobile, tablet, and desktop screens.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+
+The portfolio is organized into modular sections:
+
+1. **Hero:** High-impact presentation with background animations and vignette effects.
+2. **About:** Academic summary and technical skills grid.
+3. **Projects:** Showcasing work with status badges (In Progress, Academic, Latest).
+4. **Contact:** Call-to-action for recruiters and social links.
