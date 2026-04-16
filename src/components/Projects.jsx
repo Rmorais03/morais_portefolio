@@ -125,7 +125,8 @@ function Projects() {
                   </div>
                   
                   {/* Botões/Links - com rel="noopener noreferrer" adicionado! */}
-                  <div className="d-flex gap-3 mt-auto">
+                  <div className="d-flex gap-3 w-100 mt-auto">
+                    {project.demoLink !== "#" && (
                     <a 
                       href={project.demoLink} 
                       className="btn btn-neon px-3 py-1 fw-bold" 
@@ -134,7 +135,9 @@ function Projects() {
                       rel="noopener noreferrer"
                     >
                       Live Demo
-                    </a>
+                    </a>)}
+                    {project.codeLink !== "#" && (
+
                     <a 
                       href={project.codeLink} 
                       className="btn btn-outline-neon px-3 py-1 fw-bold" 
@@ -143,7 +146,7 @@ function Projects() {
                       style={{ fontSize: '0.85rem' }}
                     >
                       GitHub
-                    </a>
+                    </a> )}
                   </div>
                 </div>
 
