@@ -26,7 +26,7 @@ function Projects() {
       id: 3,
       title: "Plantify",
       description: "A web application fetching real-time API data to display weather forecasts with animated dynamic UI components.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=800&auto=format&fit=crop",
+      image: "https://i.postimg.cc/fR95WqvT/image.png",
       tags: ["HTML", "JavaScript", "CSS Animations", "Figma"],
       demoLink: "https://plantifyoficial-1kxtbn3tj-rmorais03s-projects.vercel.app/",
       codeLink: "https://github.com/Rmorais03/Plantify-Oficial"
