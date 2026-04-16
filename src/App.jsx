@@ -21,7 +21,7 @@ export default function App() {
         <div className="section-divider"></div>
         
         <Contact />
-        
+      
         
         <Footer />
         

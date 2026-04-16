@@ -116,7 +116,7 @@ h3,
 .btn-neon:hover {
   background-color: #0ed190 !important;
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-  transform: zoom(1.05);
+  transform: scale(1.05);
 }
 
 .btn-outline-neon {
@@ -420,3 +420,24 @@ h3,
   align-items: center;
   justify-content: center;
 }
+
+/*7. FORMULÁRIO DE CONTATO */
+.custom-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  padding: 12px 15px !important;
+  transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--neon-green) !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2) !important;
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important; 
+  opacity: 1; 
+}
+
