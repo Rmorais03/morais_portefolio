@@ -6,28 +6,31 @@ function Projects() {
   const projectsData = [
     {
       id: 1,
-      title: "Task Management Dashboard",
-      description: "A comprehensive UI/UX prototype for a productivity app, focusing on clean data visualization and seamless user flows.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop", 
-      tags: ["Figma", "UI/UX", "Prototyping"],
+      title: "Cybersecurity Management Platform",
+      status: "In Progress",
+      description: "Developing a robust Backoffice system for client and file management, ensuring compliance with the NIS2 directive protocols. Focused on secure data handling and administrative workflows.",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop", 
+      tags: ["React", "Node.js", "PostgreSQL", "NIS2 Compliance"],
       demoLink: "#",
       codeLink: "#"
     },
     {
       id: 2,
-      title: "My portefolio website",
-      description: "Full stack e-commerce platform built with React and Bootstrap. Features dynamic routing, shopping cart, and responsive design.",
+      title: "Creative Developer Portfolio",
+      status: "Latest",
+      description: "My personal portfolio featuring advanced CSS techniques, Framer Motion animations, and a focus on high-end UI/UX design. Optimized for performance and responsiveness.",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-      tags: ["React", "Bootstrap",, "Framer Motion", "Figma"],
+      tags: ["React", "Framer Motion", "Bootstrap", "Figma"],
       demoLink: "#",
       codeLink: "https://github.com/Rmorais03/Portefolio-React-Rodrigo_Morais-2026"
     },
     {
       id: 3,
-      title: "Plantify",
-      description: "A web application fetching real-time API data to display weather forecasts with animated dynamic UI components.",
-      image: "https://i.postimg.cc/fR95WqvT/image.png",
-      tags: ["HTML", "JavaScript", "CSS Animations", "Figma"],
+      title: "Sustainable Garden Guide",
+      status: "Academic",
+      description: "A minimalist, educational website about creating sustainable home gardens. Developed as a foundational project to master semantic HTML, CSS layouts, and vanilla JavaScript.",
+      image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=800&auto=format&fit=crop",
+      tags: ["HTML5", "JavaScript", "CSS3", "Figma"],
       demoLink: "https://plantifyoficial-1kxtbn3tj-rmorais03s-projects.vercel.app/",
       codeLink: "https://github.com/Rmorais03/Plantify-Oficial"
     }
@@ -81,7 +84,7 @@ function Projects() {
             Featured <span className="text-neon">Projects</span>
           </h2>
           <p className="text-muted-light max-w-75 mx-auto">
-            A selection of my recent work focusing on frontend development, UI/UX design, and interactive prototypes.
+            A showcase of my journey from web fundamentals to complex full-stack systems.
           </p>
         </motion.div>
 
@@ -104,6 +107,11 @@ function Projects() {
                 
                 {/* Conteúdo do Cartão */}
                 <div className="p-4 d-flex flex-column flex-grow-1">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="badge-neon py-1" style={{fontSize: '0.875rem'}}>
+                      {project.status}
+                    </span>
+                  </div>
                   <h5 className="text-white fw-bold mb-3">{project.title}</h5>
                   <p className="text-muted-light flex-grow-1" style={{ fontSize: '0.9rem' }}>
                     {project.description}
