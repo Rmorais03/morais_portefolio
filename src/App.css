@@ -196,6 +196,10 @@ h3,
   background: linear-gradient(to bottom, #0f141c 0%, var(--dark-bg) 100%);
   position: relative;
 }
+.hero-section .container {
+  position: relative;
+  z-index: 10; 
+}
 .hero-section::after {
   content: '';
   position: absolute;
