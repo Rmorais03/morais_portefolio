@@ -29,7 +29,7 @@ function Projects() {
       title: "Sustainable Garden Guide",
       status: "Academic",
       description: "A minimalist, educational website about creating sustainable home gardens. Developed as a foundational project to master semantic HTML, CSS layouts, and vanilla JavaScript.",
-      image: "/plantify.png",
+      image: "/plantify.jpg",
       tags: ["HTML5", "JavaScript", "CSS3", "Figma"],
       demoLink: "https://plantifyoficial-1kxtbn3tj-rmorais03s-projects.vercel.app/",
       codeLink: "https://github.com/Rmorais03/Plantify-Oficial"
