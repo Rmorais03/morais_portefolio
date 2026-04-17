@@ -23,7 +23,7 @@ function ContactForm() {
         </div>
 
         <button type="submit" className="btn btn-neon w-100 py-3 fw-bold">
-          Enviar Mensagem
+          Send Message
         </button>
       </form>
     </div>
