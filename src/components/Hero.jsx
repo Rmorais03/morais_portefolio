@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, } from 'framer-motion';
 
 function Hero() {
     // Variantes para o efeito de "cascata" (Stagger) na entrada do texto
@@ -37,7 +37,7 @@ function Hero() {
                 <div className="hero-shape shape-circle"></div>
                 <div className="hero-shape shape-triangle"></div>
             </div>
-
+            
             {/* CONTEÚDO CENTRAL (Animado com Framer Motion) */}
             <div className="container position-relative z-1 text-center">
                 <div className="row justify-content-center">
@@ -58,7 +58,7 @@ function Hero() {
 
 
                         <motion.p className="lead text-muted-light mb-5 mx-auto" style={{ maxWidth: '600px' }} variants={itemVariants}>
-                            Hi, I'm a <span className="text-white fw-semibold">UI/UX Designer</span> & <span className="text-white fw-semibold">Full Stack Developer</span> passionate about code and aesthetics.
+                            Hi, I'm an aspiring <span className="text-white fw-semibold">UI/UX Designer</span> & <span className="text-white fw-semibold">Full Stack Developer</span> passionate about code and aesthetics.
                         </motion.p>
 
                         <motion.div className="d-flex justify-content-center gap-3" variants={itemVariants}>

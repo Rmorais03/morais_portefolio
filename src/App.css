@@ -10,11 +10,17 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+
 }
 
 /* =========================================
@@ -118,9 +124,9 @@ h3,
 }
 
 .btn-neon:hover {
-  transform: scale(1.05);
   background-color: #14dca0 !important;
   box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  transform: scale(1.05);
 }
 
 /* O Efeito de Brilho (Sweep) */
@@ -209,6 +215,7 @@ h3,
   height: 200px; /* Sombra no fundo do Hero */
   background: linear-gradient(to top, var(--dark-bg), transparent);
   z-index: 2;
+  pointer-events: none;
 }
 
 .hero-bg-layers {
@@ -496,3 +503,10 @@ h3,
   opacity: 1; 
 }
 
+/* =========================================
+   OCULTAR SCROLLBAR 
+========================================= */
+/* Chrome, Safari e Opera */
+::-webkit-scrollbar {
+  display: none;
+} 

@@ -19,7 +19,7 @@ function Projects() {
       title: "Creative Developer Portfolio",
       status: "Latest",
       description: "My personal portfolio featuring advanced CSS techniques, Framer Motion animations, and a focus on high-end UI/UX design. Optimized for performance and responsiveness.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
+      image: "/public/portefolio.png",
       tags: ["React", "Framer Motion", "Bootstrap", "Figma"],
       demoLink: "#",
       codeLink: "https://github.com/Rmorais03/Portefolio-React-Rodrigo_Morais-2026"
@@ -29,7 +29,7 @@ function Projects() {
       title: "Sustainable Garden Guide",
       status: "Academic",
       description: "A minimalist, educational website about creating sustainable home gardens. Developed as a foundational project to master semantic HTML, CSS layouts, and vanilla JavaScript.",
-      image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=800&auto=format&fit=crop",
+      image: "/public/plantify.png",
       tags: ["HTML5", "JavaScript", "CSS3", "Figma"],
       demoLink: "https://plantifyoficial-1kxtbn3tj-rmorais03s-projects.vercel.app/",
       codeLink: "https://github.com/Rmorais03/Plantify-Oficial"
