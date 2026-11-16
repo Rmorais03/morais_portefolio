@@ -1,33 +1,27 @@
-import React from 'react';
-
-function ContactForm() {
+export default function ContactForm({ copy }) {
   return (
-    <div className="contact-form-card p-4">
-      <form action="https://api.web3forms.com/submit" method="POST">
-        
-        <input type="hidden" name="access_key" value="eda83cd0-2046-49c2-960c-3893a9f64256" />
+    <form className="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-        <div className="mb-3 text-start">
-          <label className="form-label text-white small fw-bold">NAME</label>
-          <input type="text" name="name" className="form-control custom-input" placeholder="Your name..." required />
-        </div>
+      <input type="hidden" name="access_key" value="eda83cd0-2046-49c2-960c-3893a9f64256" />
 
-        <div className="mb-3 text-start">
-          <label className="form-label text-white small fw-bold">EMAIL</label>
-          <input type="email" name="email" className="form-control custom-input" placeholder="your@email.com" required />
-        </div>
+      <div className="mb-3 text-start">
+        <label htmlFor="contact-name" className="form-label fw-semibold">{copy.name}</label>
+        <input id="contact-name" type="text" name="name" autoComplete="name" className="form-control custom-input" placeholder={copy.namePlaceholder} required />
+      </div>
 
-        <div className="mb-4 text-start">
-          <label className="form-label text-white small fw-bold">MESSAGE</label>
-          <textarea name="message" className="form-control custom-input" rows="4" placeholder="How can I help you?" required></textarea>
-        </div>
+      <div className="mb-3 text-start">
+        <label htmlFor="contact-email" className="form-label fw-semibold">{copy.email}</label>
+        <input id="contact-email" type="email" name="email" autoComplete="email" className="form-control custom-input" placeholder={copy.emailPlaceholder} required />
+      </div>
 
-        <button type="submit" className="btn btn-neon w-100 py-3 fw-bold">
-          Send Message
-        </button>
-      </form>
-    </div>
+      <div className="mb-4 text-start">
+        <label htmlFor="contact-message" className="form-label fw-semibold">{copy.message}</label>
+        <textarea id="contact-message" name="message" className="form-control custom-input" rows="4" placeholder={copy.messagePlaceholder} required></textarea>
+      </div>
+
+      <button type="submit" className="site-button">
+        {copy.send}
+      </button>
+    </form>
   );
 }
-
-export default ContactForm;

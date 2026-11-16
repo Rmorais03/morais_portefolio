@@ -1,68 +1,68 @@
-import React, { useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from 'react';
+import ThemeControl from './ThemeControl';
 
-function Navbar() {
-  const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false); // Novo estado para o menu
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-    // Se o menu mobile estiver aberto, não escondemos a navbar no scroll
-    if (latest > 100 && latest > previous && !isExpanded) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
-
-  const closeMenu = () => setIsExpanded(false);
+export default function Navbar({ copy, language, onLanguageChange }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const links = [
+    ['projects', copy.projects],
+    ['experience', copy.experience],
+    ['about', copy.about],
+    ['contact', copy.contact],
+  ];
 
   return (
-    <motion.nav
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="navbar navbar-expand-lg navbar-dark fixed-top glass-nav"
-    >
-      <div className="container">
-        {/* LOGO */}
-        <a className="navbar-brand fw-bold fs-4" href="#" onClick={closeMenu}>
-          Rodrigo <span className="text-neon">Morais</span>
-        </a>
-        
-        {/* BOTÃO HAMBURGUER */}
-        <button 
-          className={`navbar-toggler ${!isExpanded ? 'collapsed' : ''}`}
-          type="button" 
-          onClick={() => setIsExpanded(!isExpanded)} // Controlado pelo React
-          aria-controls="navbarNav"
-          aria-expanded={isExpanded}
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <header className="site-header sticky-top">
+      <nav className="navbar navbar-expand-lg">
+        <div className="container">
+          <a className="navbar-brand" href="#" onClick={() => setIsExpanded(false)}>
+            Rodrigo <span>Morais</span>
+          </a>
 
-        {/* LINKS DE NAVEGAÇÃO */}
-        <div className={`collapse navbar-collapse justify-content-end ${isExpanded ? 'show' : ''}`} id="navbarNav">
-          <ul className="navbar-nav gap-4 ms-auto text-center py-4 py-lg-0">
-            <li className="nav-item">
-              <a className="nav-link nav-custom-link" href="#about" onClick={closeMenu}>About</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link nav-custom-link" href="#projects" onClick={closeMenu}>Projects</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link nav-custom-link" href="#contact" onClick={closeMenu}>Contact</a>
-            </li>
-          </ul>
+          <div className="language-switcher ms-auto ms-lg-0" role="group" aria-label={copy.language}>
+            <button
+              type="button"
+              lang="en"
+              aria-label="English"
+              aria-pressed={language === 'en'}
+              onClick={() => onLanguageChange('en')}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              lang="pt-PT"
+              aria-label="Português de Portugal"
+              aria-pressed={language === 'pt-PT'}
+              onClick={() => onLanguageChange('pt-PT')}
+            >
+              PT
+            </button>
+          </div>
+
+          <ThemeControl copy={copy.theme} />
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={() => setIsExpanded(expanded => !expanded)}
+            aria-controls="navbarNav"
+            aria-expanded={isExpanded}
+            aria-label={copy.toggle}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className={`collapse navbar-collapse justify-content-end${isExpanded ? ' show' : ''}`} id="navbarNav">
+            <ul className="navbar-nav">
+              {links.map(([id, label]) => (
+                <li className="nav-item" key={id}>
+                  <a className="nav-link" href={`#${id}`} onClick={() => setIsExpanded(false)}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    </motion.nav>
+      </nav>
+    </header>
   );
 }
-
-export default Navbar;

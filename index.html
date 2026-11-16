@@ -1,15 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rodrigo Morais, software developer in Portugal. Explore my projects and experience in web development, backend integration and DevOps." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#141619" data-light="#f7f8fa" data-dark="#141619" />
+  <script>
+    (() => {
+      let preference = 'system';
+
+      try {
+        const saved = localStorage.getItem('portfolio-theme');
+        if (saved === 'light' || saved === 'dark') preference = saved;
+      } catch {}
+
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const theme = preference === 'system' ? systemTheme : preference;
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      document.documentElement.dataset.themePreference = preference;
+      document.documentElement.dataset.bsTheme = theme;
+      themeColor.content = themeColor.dataset[theme];
+    })();
+  </script>
+  <meta property="og:title" content="Rodrigo Morais | Software Developer" />
+  <meta property="og:description" content="Selected projects and experience in software development." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <title>portefolio-morais</title>
+  <title>Rodrigo Morais | Software Developer</title>
 </head>
 
 <body>

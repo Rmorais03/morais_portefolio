@@ -1,39 +1,26 @@
-import React from 'react';
-import { motion } from 'framer-motion';
 import ContactForm from './ContactForm';
 
-function Contact() {
+export default function Contact({ copy }) {
   return (
-    <section id="contact" className="py-5 container">
-      <motion.div
-        className="cta-banner" // Removi o 'mx-auto' e 'text-center' daqui para as colunas mandarem
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="row align-items-center gy-5">
-          {/* COLUNA ESQUERDA: Texto */}
-          <div className="col-lg-6 text-center text-lg-start">
-            <h2 className="display-4 fw-bold text-white mb-3">
-              Available for Summer
-            </h2>
-            <h2 className="display-4 fw-bold text-neon mb-4 glow-text">
-              Internship 2026
-            </h2>
-            <p className="text-muted-light fs-5 mb-0">
-              Looking for opportunities in <span className="text-white fw-bold">Aveiro, Coimbra, Viseu</span>, or <span className="text-white fw-bold">Remote (PT/EN)</span>
-            </p>
-          </div>
-
-          {/* COLUNA DIREITA: Formulário */}
-          <div className="col-lg-6">
-            <ContactForm />
+    <section id="contact" className="site-section" aria-labelledby="contact-title">
+      <div className="container section-split">
+        <div className="section-heading">
+          <h2 id="contact-title" className="section-title">{copy.heading}</h2>
+          <p className="section-description">{copy.intro}</p>
+          <div className="contact-links">
+            <a href="https://www.linkedin.com/in/rodrigojnmorais/" target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/Rmorais03" target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
-      </motion.div>
+
+        <div className="contact-panel">
+          <ContactForm copy={copy} />
+        </div>
+      </div>
     </section>
   );
 }
-
-export default Contact;

@@ -1,163 +1,263 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import AutoScroll from 'embla-carousel-auto-scroll';
 
-function Projects() {
-  // Array com os teus projetos de Dev / UI-UX
-  const projectsData = [
-    {
-      id: 1,
-      title: "Cybersecurity Management Platform",
-      status: "In Progress",
-      description: "Developing a robust Backoffice system for client and file management, ensuring compliance with the NIS2 directive protocols. Focused on secure data handling and administrative workflows.",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop", 
-      tags: ["React", "Node.js", "PostgreSQL", "NIS2 Compliance"],
-      demoLink: "#",
-      codeLink: "#"
-    },
-    {
-      id: 2,
-      title: "Creative Developer Portfolio",
-      status: "Latest",
-      description: "My personal portfolio featuring advanced CSS techniques, Framer Motion animations, and a focus on high-end UI/UX design. Optimized for performance and responsiveness.",
-      image: "/portefolio.png",
-      tags: ["React", "Framer Motion", "Bootstrap", "Figma"],
-      demoLink: "#",
-      codeLink: "https://github.com/Rmorais03/Portefolio-React-Rodrigo_Morais-2026"
-    },
-    {
-      id: 3,
-      title: "Sustainable Garden Guide",
-      status: "Academic",
-      description: "A minimalist, educational website about creating sustainable home gardens. Developed as a foundational project to master semantic HTML, CSS layouts, and vanilla JavaScript.",
-      image: "/plantify.jpg",
-      tags: ["HTML5", "JavaScript", "CSS3", "Figma"],
-      demoLink: "https://plantifyoficial.vercel.app/",
-      codeLink: "https://github.com/Rmorais03/Plantify-Oficial"
+const motionPreference = '(prefers-reduced-motion: reduce)';
+const carouselOptions = { loop: true, align: 'start', dragFree: true };
+const resumeDelay = 1100;
+
+const projects = [
+  {
+    id: 'ubiwhere',
+    // Illustrative server photograph by Taylor Vick: https://unsplash.com/photos/M5tzZtFCOfs
+    image: '/ubiwhere-cover.jpg',
+    imageLabel: 'Ubiwhere',
+    tags: ['React', 'KrakenD', 'Keycloak', 'Kubernetes'],
+  },
+  {
+    id: 'cybersecurity',
+    // Original cover photograph by Adi Goldstein: https://unsplash.com/photos/EUsVwEOsblE
+    image: '/cybersecurity-cover.jpg',
+    tags: ['React', 'Node.js', 'PostgreSQL', 'NIS2'],
+  },
+  {
+    id: 'portfolio',
+    image: '/portefolio.png',
+    tags: ['React', 'CSS', 'Bootstrap', 'Figma'],
+    codeLink: 'https://github.com/Rmorais03/morais_portefolio',
+  },
+  {
+    id: 'plantify',
+    image: '/plantify.jpg',
+    tags: ['HTML5', 'JavaScript', 'CSS3', 'Figma'],
+    demoLink: 'https://plantifyoficial.vercel.app/',
+    codeLink: 'https://github.com/Rmorais03/Plantify-Oficial',
+  },
+];
+
+function navigateCarousel(carousel, move) {
+  if (!carousel) return;
+  const autoScroll = carousel.plugins().autoScroll;
+  const wasPlaying = autoScroll.isPlaying();
+  autoScroll.stop();
+  move(carousel);
+  if (wasPlaying) autoScroll.play(2500);
+}
+
+export default function Projects({ copy }) {
+  const [plugins] = useState(() => [AutoScroll({
+    speed: 0.68,
+    playOnInit: false,
+    stopOnFocusIn: true,
+  })]);
+  const [viewportRef, carousel] = useEmblaCarousel(carouselOptions, plugins);
+  const [canScrollBack, setCanScrollBack] = useState(false);
+  const [canScrollForward, setCanScrollForward] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [hasKeyboardFocus, setHasKeyboardFocus] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia(motionPreference).matches);
+
+  useEffect(() => {
+    const preference = window.matchMedia(motionPreference);
+    const updateMotion = () => setReducedMotion(preference.matches);
+    preference.addEventListener('change', updateMotion);
+    return () => preference.removeEventListener('change', updateMotion);
+  }, []);
+
+  useEffect(() => {
+    if (!carousel) return;
+
+    function updateArrows() {
+      setCanScrollBack(carousel.canScrollPrev());
+      setCanScrollForward(carousel.canScrollNext());
     }
-  ];
 
-  // 1. Variantes para animar o Título e Texto descritivo
-  const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.1 });
+    observer.observe(carousel.rootNode());
+    const startDrag = () => setIsDragging(true);
+    const endDrag = () => setIsDragging(false);
+    function handleResize() {
+      endDrag();
+      updateArrows();
     }
-  };
+    carousel.on('select', updateArrows).on('reInit', handleResize);
+    carousel.on('pointerDown', startDrag).on('pointerUp', endDrag);
+    updateArrows();
 
-  // 2. Variantes da Grelha Mãe (Efeito Cascata)
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Atraso de 0.2 segundos entre cada cartão
-      },
-    },
-  };
+    return () => {
+      observer.disconnect();
+      carousel.off('select', updateArrows).off('reInit', handleResize);
+      carousel.off('pointerDown', startDrag).off('pointerUp', endDrag);
+    };
+  }, [carousel]);
 
-  // 3. Variantes de Cada Cartão Filho
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', bounce: 0.3, duration: 0.8 },
-    },
-  };
+  const shouldPlay = isVisible && !isPaused && !isHovered && !hasKeyboardFocus && !isDragging && !reducedMotion;
+
+  useEffect(() => {
+    if (!carousel) return;
+
+    function updateAutoScroll() {
+      const autoScroll = carousel.plugins().autoScroll;
+      if (shouldPlay) autoScroll.play(resumeDelay);
+      else autoScroll.stop();
+    }
+
+    updateAutoScroll();
+    carousel.on('reInit', updateAutoScroll);
+    return () => carousel.off('reInit', updateAutoScroll);
+  }, [carousel, shouldPlay]);
+
+  useEffect(() => {
+    if (!carousel) return;
+
+    function revealLinkedProject() {
+      const index = carousel.slideNodes().findIndex(slide => `#${slide.id}` === window.location.hash);
+      if (index >= 0) navigateCarousel(carousel, api => api.scrollTo(index, true));
+    }
+
+    // Re-select the card when its link is used again without changing the hash.
+    function handleRepeatLink(event) {
+      if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const link = event.target.closest('a[href^="#project-"]');
+      if (link?.hash === window.location.hash) revealLinkedProject();
+    }
+
+    revealLinkedProject();
+    window.addEventListener('hashchange', revealLinkedProject);
+    document.addEventListener('click', handleRepeatLink);
+    return () => {
+      window.removeEventListener('hashchange', revealLinkedProject);
+      document.removeEventListener('click', handleRepeatLink);
+    };
+  }, [carousel]);
+
+  function scrollProjects(direction) {
+    navigateCarousel(carousel, api => {
+      if (direction < 0) api.scrollPrev(reducedMotion);
+      else api.scrollNext(reducedMotion);
+    });
+  }
+
+  function handleTrackKeyDown(event) {
+    if (event.target !== event.currentTarget || event.altKey || event.ctrlKey || event.metaKey) return;
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollProjects(event.key === 'ArrowLeft' ? -1 : 1);
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      const index = event.key === 'Home' ? 0 : projects.length - 1;
+      navigateCarousel(carousel, api => api.scrollTo(index, reducedMotion));
+    }
+  }
 
   return (
-    <section id="projects" className="projects-section pb-5 bg-darker position-relative">
-      <div className="ambient-glow"></div>
-      <div className="container position-relative z-1 pt-5">
-        
-        {/* Cabeçalho Animado */}
-        <motion.div 
-          className="text-center mb-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={headerVariants}
-        >
-          <h2 className="display-5 fw-bold text-white mb-3">
-            Featured <span className="text-neon">Projects</span>
+    <section id="projects" className="site-section" aria-labelledby="projects-title">
+      <div className="container">
+        <div className="section-heading project-heading">
+          <h2 id="projects-title" className="section-title">
+            {copy.heading} <span className="section-accent">{copy.highlight}</span>
           </h2>
-          <p className="text-muted-light max-w-75 mx-auto">
-            A showcase of my journey from web fundamentals to complex full-stack systems.
-          </p>
-        </motion.div>
-
-        {/* Grelha de Projetos Animada */}
-        <motion.div 
-          className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }} // Dispara quando 10% da grelha estiver visível
+          <div className="project-controls">
+            {!reducedMotion && (
+              <button
+                type="button"
+                className="project-carousel-arrow project-carousel-toggle"
+                aria-label={isPaused ? copy.resume : copy.pause}
+                aria-controls="project-track"
+                onClick={() => setIsPaused(paused => !paused)}
+              >
+                <span className={isPaused ? 'project-play-icon' : 'project-pause-icon'} aria-hidden="true"></span>
+              </button>
+            )}
+            <button
+              type="button"
+              className="project-carousel-arrow project-carousel-arrow--previous"
+              aria-label={copy.previous}
+              aria-controls="project-track"
+              aria-disabled={!canScrollBack}
+              onClick={() => canScrollBack && scrollProjects(-1)}
+            >
+              <span aria-hidden="true"></span>
+            </button>
+            <button
+              type="button"
+              className="project-carousel-arrow"
+              aria-label={copy.next}
+              aria-controls="project-track"
+              aria-disabled={!canScrollForward}
+              onClick={() => canScrollForward && scrollProjects(1)}
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+        <div
+          ref={viewportRef}
+          className="project-carousel-window"
+          role="region"
+          aria-label={copy.carousel}
+          tabIndex={0}
+          data-dragging={isDragging ? 'true' : undefined}
+          onKeyDown={handleTrackKeyDown}
+          onPointerEnter={event => {
+            if (event.pointerType === 'mouse') setIsHovered(true);
+          }}
+          onPointerLeave={event => {
+            if (event.pointerType === 'mouse') setIsHovered(false);
+          }}
+          onFocusCapture={event => setHasKeyboardFocus(event.target.matches(':focus-visible'))}
+          onBlurCapture={event => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setHasKeyboardFocus(false);
+          }}
         >
-          {projectsData.map((project) => (
-            <motion.div className="col" key={project.id} variants={itemVariants}>
-              <div className="project-card">
-                
-                {/* Imagem */}
-                <div className="project-img-wrapper">
-                  <img src={project.image} alt={project.title} className="project-img" />
-                </div>
-                
-                {/* Conteúdo do Cartão */}
-                <div className="p-4 d-flex flex-column flex-grow-1">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="badge-neon py-1" style={{fontSize: '0.875rem'}}>
-                      {project.status}
-                    </span>
-                  </div>
-                  <h5 className="text-white fw-bold mb-3">{project.title}</h5>
-                  <p className="text-muted-light flex-grow-1" style={{ fontSize: '0.9rem' }}>
-                    {project.description}
-                  </p>
-                  
-                  {/* Tags */}
-                  <div className="d-flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, index) => (
-                      <span key={index} className="tech-tag">{tag}</span>
-                    ))}
-                  </div>
-                  
-                  {/* Botões/Links - com rel="noopener noreferrer" adicionado! */}
-                  <div className="d-flex gap-3 w-100 mt-auto">
-                    {project.demoLink !== "#" && (
-                    <a 
-                      href={project.demoLink} 
-                      className="btn btn-neon px-3 py-1 fw-bold" 
-                      style={{ fontSize: '0.85rem' }}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Live Demo
-                    </a>)}
-                    {project.codeLink !== "#" && (
+          <ul id="project-track" className="project-carousel list-unstyled mb-0">
+            {projects.map(({ id, image, imageLabel, tags, demoLink, codeLink }) => {
+              const { title, status, description } = copy.cards[id];
 
-                    <a 
-                      href={project.codeLink} 
-                      className="btn btn-outline-neon px-3 py-1 fw-bold" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{ fontSize: '0.85rem' }}
-                    >
-                      GitHub
-                    </a> )}
-                  </div>
-                </div>
+              return (
+                <li key={id} id={`project-${id}`} className="project-carousel-item">
+                  <article className="project-card">
+                    <div className="project-img-wrapper">
+                      <img src={image} alt="" loading="lazy" decoding="async" draggable={false} className="project-img" />
+                      {imageLabel && <span className="project-image-label">{imageLabel}</span>}
+                    </div>
+                    <div className="project-body">
+                      <span className="project-status">{status}</span>
+                      <h3>{title}</h3>
+                      <p>{description}</p>
 
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                      <div className="d-flex flex-wrap gap-2">
+                        {tags.map((tag) => <span key={tag} className="tech-tag">{tag}</span>)}
+                      </div>
 
+                      {(demoLink || codeLink) && (
+                        <div className="project-links">
+                          {demoLink && (
+                            <a href={demoLink} className="site-button site-button--outline" target="_blank" rel="noopener noreferrer">
+                              {copy.demo}
+                            </a>
+                          )}
+                          {codeLink && (
+                            <a href={codeLink} className="site-button site-button--outline" target="_blank" rel="noopener noreferrer">
+                              GitHub
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </section>
   );
 }
-
-export default Projects;
